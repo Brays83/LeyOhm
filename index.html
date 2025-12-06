@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Ley de Ohm</title>
+    <link rel="stylesheet" href="./src/css/styles.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Calculadora Ley de Ohm</h1>
+            <p>Brayan Smith Morales Quispe</p>
+        </header>
+
+        <main>
+            <section class="selection-area">
+                <label for="calcType">¿Qué deseas calcular?</label>
+                <select id="calcType" onchange="updateInputs()">
+                    <option value="voltage">Voltaje (V)</option>
+                    <option value="current">Corriente (I)</option>
+                    <option value="resistance">Resistencia (R)</option>
+                </select>
+            </section>
+
+            <section class="inputs-area">
+                <div class="input-group">
+                    <label id="label1">Corriente (A):</label>
+                    <input type="number" id="input1" step="0.1" placeholder="0">
+                </div>
+                <div class="input-group">
+                    <label id="label2">Resistencia (Ω):</label>
+                    <input type="number" id="input2" step="0.1" placeholder="0">
+                </div>
+                <button onclick="calculate()" class="btn-primary">Calcular</button>
+            </section>
+
+            <section class="result-area">
+                <h2>Resultado: <span id="resultValue">--</span></h2>
+                <p id="formulaDisplay" class="formula">Fórmula: --</p>
+                <button onclick="saveCalculation()" class="btn-secondary" id="saveBtn" disabled>Guardar Cálculo</button>
+            </section>
+
+            <section class="chart-container">
+                <canvas id="ohmChart"></canvas>
+            </section>
+
+            <section class="history-area">
+                <h3>Historial Guardado</h3>
+                <ul id="historyList"></ul>
+                <button onclick="clearHistory()" class="btn-danger">Borrar Historial</button>
+            </section>
+        </main>
+    </div>
+
+    <script src="./src/javascript/main.js"></script>
+</body>
+</html>
