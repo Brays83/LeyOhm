@@ -1,4 +1,9 @@
 
+
+// Importar casos de uso
+import { obtenerResultado } from './ohmUseCases.js';
+
+// ========== Controlador/Interfaz ==========
 let currentChart = null;
 let lastResult = null;
 
@@ -35,52 +40,32 @@ function calculate() {
     const type = document.getElementById('calcType').value;
     const val1 = parseFloat(document.getElementById('input1').value);
     const val2 = parseFloat(document.getElementById('input2').value);
-    
     if (isNaN(val1) || isNaN(val2) || val1 < 0 || val2 < 0) {
         alert("Por favor ingresa valores numéricos positivos válidos.");
         return;
     }
-
-    let result = 0;
-    let unit = "";
-    let formulaStr = "";
-    let labelChart = "";
-
-    // Lógica Ohm: V = I * R
+    let resultado;
+    try {
+        resultado = obtenerResultado(type, val1, val2);
+    } catch (e) {
+        alert(e.message);
+        return;
+    }
+    // Gráfico
     if (type === 'voltage') {
-        // val1 = I, val2 = R
-        result = val1 * val2;
-        unit = "V";
-        formulaStr = "V = I × R";
-        generateChart(val2, 'voltage', val1); 
+        generateChart(val2, 'voltage', val1);
     } else if (type === 'current') {
-        // val1 = V, val2 = R
-        if (val2 === 0) { alert("La resistencia no puede ser 0"); return; }
-        result = val1 / val2;
-        unit = "A";
-        formulaStr = "I = V / R";
         generateChart(val2, 'current', val1);
     } else if (type === 'resistance') {
-        // val1 = V, val2 = I
-        if (val2 === 0) { alert("La corriente no puede ser 0"); return; }
-        result = val1 / val2;
-        unit = "Ω";
-        formulaStr = "R = V / I";
-        generateChart(val2, 'resistance', result);
+        generateChart(val2, 'resistance', resultado.result);
     }
-
-    
-    document.getElementById('resultValue').innerText = result.toFixed(2) + " " + unit;
-    document.getElementById('formulaDisplay').innerText = formulaStr;
-    
-   
+    document.getElementById('resultValue').innerText = resultado.result.toFixed(2) + " " + resultado.unit;
+    document.getElementById('formulaDisplay').innerText = resultado.formulaStr;
     document.getElementById('saveBtn').disabled = false;
-    
-    
     lastResult = {
         type: type,
         inputs: `${val1}, ${val2}`,
-        result: result.toFixed(2) + " " + unit,
+        result: resultado.result.toFixed(2) + " " + resultado.unit,
         date: new Date().toLocaleTimeString()
     };
 }
