@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     loadHistory();
     document.getElementById('calcType').addEventListener('change', updateInputs);
     document.getElementById('calcBtn').addEventListener('click', calculate);
+    document.getElementById('saveBtn').addEventListener('click', saveCalculation);
+    document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
 });
 
 // UI
