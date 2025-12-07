@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateInputs();
     loadHistory();
     document.getElementById('calcType').addEventListener('change', updateInputs);
+    document.getElementById('calcBtn').addEventListener('click', calculate);
 });
 
 // UI
