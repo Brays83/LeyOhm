@@ -11,6 +11,7 @@ let lastResult = null;
 document.addEventListener('DOMContentLoaded', () => {
     updateInputs();
     loadHistory();
+    document.getElementById('calcType').addEventListener('change', updateInputs);
 });
 
 // UI
